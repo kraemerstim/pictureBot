@@ -16,17 +16,18 @@ class TelegramBot:
         self.bot = telepot.Bot(token)
         MessageLoop(self.bot, self.handleMessage).run_as_thread()
 
-    def download_picture(self, file_id, folder):
-        path = os.path.join(self.picture_path, folder)
-        os.makedirs(path, exist_ok=True)
-        path = os.path.join(path, file_id) + '.jpg'
+    def download_picture(self, file_id):
+        os.makedirs(self.picture_path, exist_ok=True)
+        path = os.path.join(self.picture_path, file_id) + '.jpg'
         self.bot.download_file(file_id, path)
 
     def handleMessage(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         
+        print(content_type)
+        print(msg)
         if content_type == 'document' and msg['document']['mime_type'] == 'image/jpeg':
-            self.download_picture(msg['document']['file_id'], str(msg['from']['id']))
+            self.download_picture(msg['document']['file_id'])
 
         elif content_type == 'photo':
             biggestPicture = {'size': -1}
@@ -36,7 +37,10 @@ class TelegramBot:
                     biggestPicture['id'] = photoid['file_id']
             print (biggestPicture)
             if 'id' in biggestPicture:
-                self.download_picture(biggestPicture['id'], str(msg['from']['id']))
+                self.download_picture(biggestPicture['id'])
+        
+        elif content_type == 'location':
+            self.bot.sendMessage(chat_id, 'thanks, but why?')
 
         else:
             self.bot.sendMessage(chat_id, 'Hallo ' + msg['from']['first_name'] + ' please send an image or a photo of your Chili')
