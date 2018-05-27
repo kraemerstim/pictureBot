@@ -4,17 +4,17 @@
 import os
 import configparser
 
-def getFilePath(aFilePath):
-  return os.path.join(os.path.dirname(__file__), aFilePath)
+def get_file_path(file_path):
+  return os.path.join(os.path.dirname(__file__), file_path)
     
-def setIniFile(aFilePath='config.ini'):
-  if os.path.isfile(getFilePath(aFilePath)):
-    config.read(os.path.join(os.path.dirname(__file__), aFilePath))
+def set_ini_file(file_path='config.ini'):
+  if os.path.isfile(get_file_path(file_path)):
+    config.read(os.path.join(os.path.dirname(__file__), file_path))
   
 def initialize():
   global config
   config = configparser.ConfigParser()
-  setIniFile()
+  set_ini_file()
 
-def getIniValue(aSection, aKey):
-  return config.get(aSection, aKey, fallback='')
+def get_ini_value(section, key):
+  return config.get(section, key, fallback='')

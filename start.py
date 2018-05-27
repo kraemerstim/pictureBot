@@ -4,7 +4,7 @@
 import signal
 import time
 import os
-import telegramBot
+import telegramWrapper
 import configreader
 import database
 
@@ -21,16 +21,15 @@ def initialize():
     signal.signal(signal.SIGINT, cleanup)
     
     configreader.initialize()
-    picturePath = configreader.getIniValue('Main', 'pictureFolder')
-    path = os.path.abspath(os.path.dirname(__file__))
-    path = os.path.join(path, picturePath)
+    picture_path = configreader.get_ini_value('Main', 'pictureFolder')
+    picture_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), picture_path)
 
-    dbFile = configreader.getIniValue('Main', 'database')
-    db = database.DBConnector(dbFile)
+    db_file = configreader.get_ini_value('Main', 'database')
+    db = database.DBConnector(db_file)
     db.initialize
 
-    botToken = configreader.getIniValue('Main', 'botToken')
-    telegramBot.TelegramBot(botToken, path)
+    bot_token = configreader.get_ini_value('Main', 'botToken')
+    telegramWrapper.TelegramWrapper(bot_token, picture_path)
 
 def main():
     initialize()
