@@ -7,6 +7,7 @@ import os
 import telegramWrapper
 import configreader
 import database
+import pictureBot
 
 def cleanup(signal,frame):
     global program_running
@@ -29,7 +30,10 @@ def initialize():
     db.initialize
 
     bot_token = configreader.get_ini_value('Main', 'botToken')
-    telegramWrapper.TelegramWrapper(bot_token, picture_path)
+    telegram_api = telegramWrapper.TelegramWrapper(bot_token, picture_path)
+
+    pictureBot.pictureBot(telegram_api)
+
 
 def main():
     initialize()

@@ -1,0 +1,20 @@
+{
+    "message_id": 65,
+    "from": {
+        "id": 123456789,
+        "is_bot": false,
+        "first_name": "vorname",
+        "last_name": "nachname",
+        "username": "username",
+        "language_code": "de-DE"
+    },
+    "chat": {
+        "id": 123456789,
+        "first_name": "vorname",
+        "last_name": "nachname",
+        "username": "username",
+        "type": "private"
+    },
+    "date": 1527454216,
+    "text": "test"
+}
